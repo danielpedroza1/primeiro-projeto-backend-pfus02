@@ -54,7 +54,7 @@ module.exports = {
   },
   
   deletar: (id) => {
-    const index = listaUsuarios.findIndex((user) => user.id == id):
+    const index = listaUsuarios.findIndex((user) => user.id == id)
      if(index === -1) return false;
      listaUsuarios.splice(index, 1);
      return true;

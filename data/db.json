@@ -18,5 +18,32 @@
             "email": "Shaolinmatadordeporco@gmail.com",
             "senha": "11"
         }
+    ],
+
+    "produtos" : [
+        {
+            "id" : 10,
+            "nome" : "vassoura",
+            "descricao" : "uma madeira com fios embaixo que te auxilia a varrer",
+            "preco" : 10,
+            "quantidade" : 1,
+            "categoria" : "casa"
+        },
+        {
+            "id": 11,
+            "nome": "desentupidor",
+            "descricao" : "uma madeira com um cone de barracha embaixo que te auxilia a desentopir privadas",
+            "preco" : 19.99,
+            "quantidade" : 20,
+            "categoria" : "casa"
+        },
+        {
+            "id" : 12,
+            "nome" : "pá",
+            "descricao" : "uma madeira com um metal plano embaixo que te auxilia a catar coisas",
+            "preco" : 28,
+            "quantidade" : 1,
+            "categoria" : "casa"
+        }
     ]
 }
