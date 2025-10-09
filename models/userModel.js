@@ -7,22 +7,23 @@ let listaUsuarios = db.usuarios;
 module.exports = {
   // Login
   // Função para válidar o login
-  login: (usuario, senha) => {
+  login: (email, senha) => {
     // Busca na lista de usuários, se tem aquele usuário com as informações que ele passou
     let logado =
       listaUsuarios.find(
-        (user) => user.email === usuario && user.senha === senha
+        (user) => user.email === email && user.senha == senha
       ) || null;
     return logado;
   },
   //CRUD
   // Função para cadastrar um novo usuRIO
-  salvar: ({ usuario, email, senha }) => {
+  salvar: ({ usuario, email, senha, tipo }) => {
     const novoUsuario = {
       id: listaUsuarios.length + 1,
       usuario,
       email,
       senha,
+      tipo
     };
     listaUsuarios.push(novoUsuario);
     console.log("Novo usuário salvo", novoUsuario);

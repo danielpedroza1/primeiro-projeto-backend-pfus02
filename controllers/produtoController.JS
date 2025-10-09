@@ -4,13 +4,17 @@ const { json } = require("express");
 module.exports = {
 
   formCadastroP: (req, res) => {
-    res.render("cadastroProduto"); 
+    res.render("produtos/cadastroProduto", {titulo: "cadastro Produto"}); 
   },
 
   salvarProduto: (req, res) => {
-    const { nome, descricao, preco, quantidade, categoria} = req.body;
-    produtoModel.salvar({nome, descricao, preco, quantidade, categoria});
-    res.render("cadastroConfirmado"); 
+    const { produtos, nome, descricao, preco, quantidade, categoria, Imagem} = req.body;
+    produtoNovo = produtoModel.salvar({ produtos, nome, descricao, preco, quantidade, categoria, Imagem});
+    res.render("produtos/confirmacaoProdutos",{
+      tipo: "cadastro",
+      titulo: "Cadastro confirmado",
+      produtoNovo
+    })
   },
 
   listarProdutos: (req, res) => {

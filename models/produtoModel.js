@@ -2,16 +2,17 @@ const db = require("../data/db.json");
 let listaProdutos = db.produtos;
 
 module.exports = {
-  salvar: ({ nome, descricao, preco, quantidade, categoria}) => {
+  salvar: ({ nome, descricao, preco, quantidade, categoria, Imagem}) => {
     const novoProduto = {
       id: listaProdutos.length + 1,
       nome,
       descricao,
       preco,
       quantidade,
-      categoria
+      categoria,
+      Imagem
     };
-    listaUsuarios.push(novoProduto);
+    listaProdutos.push(novoProduto);
     console.log("Novo produto salvo", novoProduto);
     return novoProduto;
   },

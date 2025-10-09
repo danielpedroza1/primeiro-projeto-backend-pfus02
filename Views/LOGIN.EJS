@@ -30,9 +30,12 @@
                 <!-- botao para enviar os dados -->
                  <button type="submit" class="btn btn-primary btn-lg mt-2">entrar</button>
         </form>
-
-        <!-- caixinha de alerta -->
-         <div class="alert alert-danger text-center mx-auto mt-3" style="width: 50%;">Usuário ou senha invalidos</div>
+        
+        <!-- Caixinha de alerta só aparece se ele errar o login -->
+        <% if (typeof erro !== "undefined") { %>
+            <!-- caixinha de alerta -->
+            <div class="alert alert-danger text-center mx-auto mt-3" style="width: 50%;">Usuário ou senha invalidos</div>
+        <% } %>
     </main>
     <footer></footer>
 

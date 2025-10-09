@@ -20,23 +20,31 @@ module.exports = {
 
     // Se não conseguiu logar, manda uma mensagem de erro
     if (!logado) {
-      return res.status(401).json({ mensagem: "Usuário ou senha inválidos" });
+      // return res.status(401).json({ mensagem: "Usuário ou senha inválidos" });
+      res.status(401) 
+      res.render("login", {titulo: "Login errado", erro:"Email ou senha inválidos"})
     }
     // Se conseguiu manda uma mensagem de confirmação
     else {
-      res.json({ mensagem: "Login realizado" });
+      // res.json({ mensagem: "Login realizado" });
+      res.status(200)
+      res.render("index", {titulo:"Bem Vindo", usuario: logado.nome})
     }
   },
 
   //CRUD
   // Responde a requisição mostrando a visualização da tela de cadastro
   formCadastro: (req, res) => {
-    res.render("cadastro");
+    res.render("usuarios/cadastroUsuarios", {titulo: "Cadastro"});
   },
   salvarUsuario: (req, res) => {
-    const { usuario, email, senha } = req.body;
-    userModel.salvar({ usuario, email, senha });
-    res.render("cadastroConfirmado");
+    const { usuario, email, senha, tipo } = req.body;
+    usuarioNovo = userModel.salvar({ usuario, email, senha, tipo });
+    res.render("usuarios/confirmacaoUsuarios", {
+      tipo: "cadastro",
+      titulo: "Cadastro confirmado",
+      usuarioNovo
+    });
   },
 
   // R
