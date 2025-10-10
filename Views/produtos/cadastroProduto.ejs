@@ -18,30 +18,37 @@
             <input type="text" id="inputDescricao" class="form-control form-control-lg" placeholder="Digite a descrição do produto" name="descricao" required>
             <!-- fim da caixinha de descrição -->
 
-            <!-- caixinha de preço -->
-            <label for="inputPreco" class="form-label fs-2 mt-2">Preço</label>
-            <input type="number" id="inputPreco" class="form-control form-control-lg" placeholder="Digite o preço" name="preco" required>
-            <!-- fim da caixinha de senha -->
-
-            <!-- caixinha de categoria -->
+              <!-- caixinha de categoria -->
+               <div class="row">
+                <div class = "col">
             <label class="form-label fs-2 mt-2">Categoria de produto</label>
-            <select name="categoria" class="form-select form-select-lg mb-3">
+            <select name="categoria" class="form-select form-select-lg">
                 <option value="Alimentos">Alimentos</option>
                 <option value="Bebidas">Bebidas</option>
                 <option value="Objetos">Objetos</option>
             </select>
             <!-- fim da caixinha de tipo -->
 
+            <!-- caixinha de preço -->
+            <label for="inputPreco" class="form-label fs-2 mt-2">Preço</label>
+            <input type="number" id="inputPreco" class="form-control form-control-lg" placeholder="Digite o preço" name="preco" required>
+            <!-- fim da caixinha de senha -->
+
+
             <!-- caixinha de quantidade -->
             <label for="inputQuantidade" class="form-label fs-2 mt-2">Quantidade</label>
             <input type="number" id="inputQuantidade" class="form-control form-control-lg" placeholder="Digite a quantidade" name="quantidade" required>
             <!-- fim da caixinha de quantidade -->
-
+             </div>
+             
+             <div class="col">
             <!-- caixinha de imagem -->
             <label for="inputImagem" class="form-label fs-2 mt-2">Imagem de produto</label>
             <input type="url" id="inputImagem" class="form-control form-control-lg" placeholder="Digite o link da imagem do produto" name="imagem" required>
             <!-- fim da caixinha de imagem -->
-
+            <img class="d-flex mx-auto mt-3" style="width: 500px;" src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/10/demon-slayer-s-zenitsu.jpg?w=1200&h=675&fit=crop">
+            </div>
+            </div>
             <!-- Botão para envio do formulario -->
              <button type="submit" class="btn btn-lg btn-primary">Cadastrar</button>
         </div>
