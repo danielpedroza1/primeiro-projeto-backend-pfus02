@@ -2,21 +2,24 @@
     "usuarios" :[
         {
             "id": 1,
-            "nome": "cleber",
+            "usuario": "cleber",
             "email": "cleberdotang@gmail.com",
-            "senha": "9"
+            "senha": "9",
+            "tipo": "Administrador"
         }, 
         {
             "id": 2,
-            "nome": "cauan",
+            "usuario": "cauan",
             "email": "cauanmano@gmail.com",
-            "senha": "10"
+            "senha": "10",
+            "tipo": "gerente"
         }, 
         {
             "id": 3,
-            "nome": "Shaolin",
+            "usuario": "Shaolin",
             "email": "Shaolinmatadordeporco@gmail.com",
-            "senha": "11"
+            "senha": "11",
+            "tipo": "funcionario"
         }
     ],
 
