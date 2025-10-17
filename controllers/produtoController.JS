@@ -19,8 +19,8 @@ module.exports = {
 
   listarProdutos: (req, res) => {
     const produtos = produtoModel.listarTodos();
-    res.json(produtos)
-    res.render("produtos", { produtos });
+    res.render("produtos/listaProdutos", 
+              {produtos, titulo:"lista de produtos"});
   },
 
   buscarProduto: (req, res) => {
