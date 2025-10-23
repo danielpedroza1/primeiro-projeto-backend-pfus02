@@ -1,0 +1,50 @@
+<!-- Cabeçalho principal  -->
+<%- include('../partials/header') %>
+
+<!-- CONTEÚDO DO INDEX -->
+<main class="container d-flex flex-column flex-fill justify-content-center">
+    <h1 class="text-center">Editar usuarios</h1>
+    
+    <!-- criando o formulario para envio das informações -->
+    <form action="/usuarios/<%= usuario.id %>" method="POST">
+        <div class="mb-3">
+            <!-- caixinha de nome de usuario -->
+             <label for="inputNome" class="form-label fs-2 mt-2">Nome de usuario</label>
+             <input type="text" id="inputNome" class="form-control form-control-lg" placeholder="Digite o nome de usuário" name="usuario" required value=<%= usuario.usuario %>>
+            <!-- fim da caixinha nome de usuario -->
+
+            <!-- caixinha de email -->
+            <label for="inputEmail" class="form-label fs-2 mt-2">Email</label>
+            <input type="email" id="inputEmail" class="form-control form-control-lg" placeholder="Digite o email" name="email" required value=<%= usuario.email %>>
+            <!-- fim da caixinha de email -->
+
+            <!-- caixinha de senha -->
+            <label for="inputSenha" class="form-label fs-2 mt-2">Senha</label>
+            <input type="password" id="inputSenha" class="form-control form-control-lg" placeholder="Digite a senha" name="senha" required value=<%= usuario.senha %>>
+            <!-- fim da caixinha de senha -->
+
+            <!-- caixinha de tipo -->
+            <label class="form-label fs-2 mt-2">Tipo de usuario</label>
+            <select name="tipo" class="form-select form-select-lg mb-3">
+                <option value="Funcionário" <%= usuario.tipo === "Funcionário" ? "selected" : "" %>>
+                    Funcionário
+                </option>
+                <option value="Gerente" <%= usuario.tipo === "Gerente" ? "selected" : "" %>>
+                    Gerente
+                </option>
+                <option value="Administrador" <%= usuario.tipo === "Administrador" ? "selected" : "" %>>
+                    Administrador
+                </option>
+                <option value="Gari" <%= usuario.tipo === "Gari" ? "selected" : "" %>>
+                    Gari
+                </option>
+            </select>
+            <!-- fim da caixinha de tipo -->
+
+            <!-- Botão para envio do formulario -->
+             <button type="submit" class="btn btn-lg btn-primary">Editar</button>
+        </div>
+    </form>
+</main>
+<!-- Rodape de todas as paginas -->
+<%- include('../partials/footer') %>

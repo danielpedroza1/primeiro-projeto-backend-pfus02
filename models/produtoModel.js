@@ -22,21 +22,22 @@ module.exports = {
   },
 
   buscarPorId: (id) => {
-    return listaProdutoS.find((prod) => prod.id == id || null);
+    return listaProdutos.find((prod) => prod.id == id || null);
   },
 
-  atualizar: (id, {nome, descricao, preco, quantidade, categoria}) => {
+  atualizar: (id, {nome, descricao, preco, quantidade, categoria, imagem}) => {
 
     const index = listaProdutos.findIndex((prod) => prod.id == id);
 
     if(index === -1) return null;
     listaProdutos[index]={
       ...listaProdutos[index],
-      listaProdutos: nome || listaProdutos[index].nome,
-      listaProdutos: descricao || listaProdutos[index].descricao,
-      listaProdutos: preco || listaProdutos[index].preco,
-      listaProdutos: quantidade || listaProdutos[index].quantidade,
-      listaProdutos: categoria || listaProdutos[index].categoria,
+      nome: nome || listaProdutos[index].nome,
+      descricao: descricao || listaProdutos[index].descricao,
+      preco: preco || listaProdutos[index].preco,
+      quantidade: quantidade || listaProdutos[index].quantidade,
+      categoria: categoria || listaProdutos[index].categoria,
+      imagem: imagem || listaProdutos[index].imagem,
     };
   
     return listaProdutos[index];

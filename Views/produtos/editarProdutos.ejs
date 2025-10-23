@@ -1,0 +1,57 @@
+<!-- Cabeçalho principal  -->
+<%- include('../partials/header') %>
+
+<!-- CONTEÚDO DO INDEX -->
+<main class="container d-flex flex-column flex-fill justify-content-center">
+    <h1 class="text-center">Editar Produtos</h1>
+    
+    <!-- criando o formulario para envio das informações -->
+    <form action="/produtos/<%= produto.id %>" method="POST">
+        <div class="mb-3">
+            <!-- caixinha de nome de produto -->
+             <label for="inputNome" class="form-label fs-2 mt-2">Nome do produto</label>
+             <input type="text" id="inputNome" class="form-control form-control-lg" placeholder="Digite o nome de usuário" name="produto" required value="<%= produto.nome %>">
+            <!-- fim da caixinha nome de produto -->
+
+            <!-- caixinha de descricao -->
+            <label for="inputDescricao" class="form-label fs-2 mt-2">Descrição</label>
+            <input type="text" id="inputDescricao" class="form-control form-control-lg" placeholder="Digite a descrição" name="descricao" required value="<%= produto.descricao %>">
+            <!-- fim da caixinha de descricao -->
+
+            <!-- caixinha de preco -->
+            <label for="inputPreco" class="form-label fs-2 mt-2">Preço</label>
+            <input type="number" id="inputPreco" class="form-control form-control-lg" placeholder="Digite o preço" name="preco" required value=<%= produto.preco %>>
+            <!-- fim da caixinha de preco -->
+
+            <!-- caixinha de quantidade -->
+            <label for="inputQuantidade" class="form-label fs-2 mt-2">Quantidade</label>
+            <input type="number" id="inputQuantidade" class="form-control form-control-lg" placeholder="Digite a quantidade" name="quantidade" required value=<%= produto.quantidade %>>
+            <!-- fim da caixinha de quantidade -->
+
+            <!-- caixinha de tipo -->
+            <label class="form-label fs-2 mt-2">Categoria de produto</label>
+            <select name="categoria" class="form-select form-select-lg">
+                <option value="Alimentos" <%= produto.categoria === "Alimentos" ? "selected" : "" %>>
+                    Alimentos
+                </option>
+                <option value="Bebidas" <%= produto.categoria === "Bebidas" ? "selected" : "" %>>
+                    Bebidas
+                </option>
+                <option value="Objetos" <%= produto.categoria === "Objetos" ? "selected" : "" %>>
+                    Objetos
+                </option>
+            </select>
+            <!-- fim da caixinha de tipo -->
+            
+            <!-- caixinha de imagem -->
+            <label for="inputImagem" class="form-label fs-2 mt-2">Imagem de produto</label>
+            <input type="url" id="inputImagem" class="form-control form-control-lg" placeholder="Digite o link da imagem do produto" name="imagem" required value=<%= produto.imagem %>>
+            <!-- fim da caixinha de imagem -->
+
+            <!-- Botão para envio do formulario -->
+             <button type="submit" class="btn btn-lg btn-primary">Editar</button>
+        </div>
+    </form>
+</main>
+<!-- Rodape de todas as paginas -->
+<%- include('../partials/footer') %>
