@@ -8,7 +8,7 @@ const roteador = express.Router()
 const produtoController=require("../controllers/produtoController")
 
 
-roteador.get("/cadastrar", produtoController.formCadastroP)
+roteador.get("/cadastrar", produtoController.formCadastro)
 roteador.post("/cadastrar", produtoController.salvarProduto)
 
 
@@ -20,7 +20,7 @@ roteador.get("/:id", produtoController.buscarProduto)
 // atualiza produto por id
 roteador.post("/:id", produtoController.atualizarProduto)
 // deleta produto por id
-roteador.get("/:id", produtoController.deletarProduto)
+roteador.get("/deletar/:id", produtoController.deletarProduto)
 
 
 module.exports = roteador

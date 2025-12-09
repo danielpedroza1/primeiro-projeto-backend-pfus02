@@ -1,117 +1,163 @@
-//Importa o módulo de path pra saber as pastas e arquivos do projeto
-const path = require("path");
-
-//Importa tudo que tem no projeto
+// Importa tudo que tem no model
 const userModel = require("../models/userModel");
-const { json } = require("express");
+
 
 module.exports = {
-  //LOGIN
-  // Responde a requisição mostrando a visualização da tela de login
+  // LOGIN
+  // REsponde a requisição mostrando a visualização da tela de login
   formLogin: (req, res) => {
-    res.render("login", {titulo: "Login"});
+    res.render("login", { titulo: "Login" });
   },
-  // Função para levar os dados preenchidos para o model realiar o login
-  loginUsuario: (req, res) => {
-    //Cria um objeto com as informações do body, retirados dos inputs
-    const { email, senha } = req.body;
-    //Manda as informações do objeto para o model
-    const logado = userModel.login(email, senha);
 
-    // Se não conseguiu logar, manda uma mensagem de erro
-    if (!logado) {
-      // return res.status(401).json({ mensagem: "Usuário ou senha inválidos" });
-      res.status(401) 
-      res.render("login", {titulo: "Login errado", erro:"Email ou senha inválidos"})
-    }
-    // Se conseguiu manda uma mensagem de confirmação
-    else {
-      // res.json({ mensagem: "Login realizado" });
-      res.status(200)
-      res.render("index", {titulo:"Bem Vindo", usuario: logado.nome})
-    }
+
+  // Função para levar os dados preenchidos para o model realizar o login
+  loginUsuario: (req, res) => {
+    // Cria um objeto com as informações do body, retirados dos inputs
+    const { email, senha } = req.body;
+    // Manda as informações do objeto para o model
+    userModel.login(email, senha, (erro, logado) => {
+      if (erro) {
+        return res.render("login", {
+          titulo: "Login errado",
+          erro: "erro no servidor",
+        });
+      }
+      // Se não conseguiu logar, manda uma mensagem de erro
+      if (!logado) {
+        res.render("login", {
+          titulo: "Login errado",
+          erro: "Email ou senha inválidos",
+        });
+      }
+      // Se conseguiu manda uma mensagem de confirmação
+      else {
+        res.status(200);
+        res.render("index", { titulo: "Bem vindo", usuario: logado.nome });
+      }
+    });
   },
 
   //CRUD
-  // Responde a requisição mostrando a visualização da tela de cadastro
-  formCadastro: (req, res) => {
-    res.render("usuarios/cadastroUsuarios", {titulo: "Cadastro"});
-  },
-  salvarUsuario: (req, res) => {
-    const { usuario, email, senha, tipo } = req.body;
-    usuarioNovo = userModel.salvar({ usuario, email, senha, tipo });
-    res.render("usuarios/confirmacaoUsuarios", {
-      tipo: "cadastro",
-      titulo: "Cadastro confirmado",
-      usuarioNovo
-    });
+
+  //C
+  formCadastro: (req,res) => {
+    // Renderiza a pagina de cadastro
+    res.render("usuarios/cadastroUsuarios", {titulo: "Cadastro"})
   },
 
-  // R
-  //Função para mostrar todos os usuarios
-  listarUsuarios: (req, res) => {
-    //Guarda a lista de usuários, que o model mandou depois que buscou o banco
-    const usuarios = userModel.listarTodos();
-    //Mostra a tela de lista pra pessoa, mandando a variável como parametro
-    res.render("usuarios/listaUsuarios",
-              {usuarios, titulo:"lista de usuários"})
+  salvarUsuario:(req,res) => {
+    // Criar um objeto com as informações da view
+    const {usuario, email, senha, tipo} = req.body
+    
+    // manda as informações pro model
+    userModel.salvar({usuario, email, senha, tipo}, (erro, usuarioNovo) => {
+      // Se deu erro, renderiza a página de erro, mostrando a mensagem do erro
+      if(erro){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo:"Erro",
+          mensagem: "Erro ao salvar o usuário"
+        })
+      }
+
+      // Se deu certo, renderiza a página de confirmação
+      res.render("usuarios/confirmacaoUsuarios", {
+        titulo:"cadastroConfirmado",
+        tipo:"cadastro",
+        usuarioNovo
+      })
+    })
+
   },
-  //Função para mostrar apenas um usuario
-  buscarUsuario: (req, res) => {
-    // Busca o id vindo da url como parametro
-    const id = req.params.id;
-    // Guarda o usuário retornando, ddepois de buscar pelo model
-    const usuario = userModel.buscarPorId(id);
-    // Se não achar, avisa que deu erro
-    if (!usuario) {
-      return res.status(404).render("usuarios/erroUsuario", {
-        titulo: "erro",
-        mensagem: "Usuário não encontrado"
+
+  //R
+  listarUsuarios: (req,res) => {
+    // acessar o model, e resgatar as informações
+    userModel.listarTodos((erro, usuarios) => {
+      if(erro){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo:"Erro",
+          mensagem: "Erro ao listar os usuários"
+        })
+      } 
+
+      // Se deu certo, renderiza a página de lista de usúarios
+      res.render("usuarios/listaUsuarios", {
+        titulo: "Lista de usuários",
+        usuarios
+      })
+    })
+  },
+
+  //U
+  buscarUsuario: (req,res) => {
+    // Busca o id vindo como parametro da url
+    const id = req.params.id
+
+    // Acessar o model para realizar a busca
+    userModel.buscarPorId(id, (erro, usuario) => {
+      // se deu erro na busca, informa o erro
+      // ou se não achou o usuário
+      if(erro || !usuario){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao buscar o usuário"
+        })
+      }
+      // Se encontrou, renderiza a página de edição
+      res.render("usuarios/editarUsuarios", {titulo: "Edição", usuario})
+    })
+  },
+  atualizarUsuario: (req,res) => {
+    // Busca o id vindo como parametro da url
+    const id = req.params.id
+
+    // Criar um objeto com as informações da view
+    const {usuario, email, senha, tipo} = req.body
+
+    // Acessar o model, e atualizar o usuario
+    userModel.atualizar(id, {usuario,email,senha,tipo}, (erro, atualizado) => {
+      // se deu erro na atualizacao, informa o erro
+      // ou se não conseguiu
+      if(erro){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao atualizar o usuário"
+        })
+      }
+      
+      const usuarioAtualizado = atualizado
+      res.render("usuarios/confirmacaoUsuarios", {
+        tipo: "edicao",
+        titulo: "Edição confirmada",
+        usuarioAtualizado
       });
-    }
-    // se achar, devolve as informações via json
-    res.render("usuarios/editarUsuarios", {
-      titulo: "editar",
-      usuario
-    }
-
+      }
     );
   },
-  // Função para atualizar informações de um usuário
-  atualizarUsuario: (req, res) => {
-    // Busca o id vindo da url como parametro
-     const id = req.params.id;
-     // Busca as novas informações para atualizar 
-     const { usuario, email, senha, tipo } = req.body;
-     // Guarda o usuário em uma variável
-     const usuarioAtualizado = userModel.atualizar(id, {usuario, email, senha, tipo})
 
-     // Se não achar, avisa que deu erro
-    if (!usuarioAtualizado) {
-      return res.status(404).render("usuarios/erroUsuario", {
-        titulo: "erro",
-        mensagem: "Não foi possível atualizar"
+  //D
+  deletarUsuario: (req,res) => {
+  // Busca o id vindo como parametro da url
+    const id = req.params.id
+
+  // Acessar o model, e solicitar a exclusão do usuario
+  userModel.deletar(id, (erro, sucesso) => {
+    // Se deu erro ao deletar, informa o erro
+    // Ou se não conseguiu 
+    if(erro || !sucesso){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao buscar o usuário"
+        });
+      }
+
+      const deletado = {usuario: "selecionado"}
+      // Renderiza a tela de sucesso
+      res.render("usuarios/confirmacaoUsuarios", {
+        tipo: "excluir",
+        titulo: "Usuário deletado",
+        deletado
       });
-    }
-    // se atualizar, manda mensagem dizendo que deu certo
-     res.render("usuarios/confirmacaoUsuarios", {
-      titulo: "Edicao confirmada",
-      tipo: "edicao",
-      usuarioAtualizado
-    });
+      });
   },
-  // Função para deletar um usúario
-  deletarUsuario: (req, res) => {
-    // Busca o id vindo da url como parametro
-    const id = req.params.id;
-    // Guarda o usuário deletado em uma variável
-    const deletado = userModel.deletar(id);
-    
-    if (!deletado) {
-      return res.status(404).json({ mensagem: "Usuário não encontrado" });
-    }
-    // se atualizar, manda mensagem dizendo que deu certo
-    res.json({ mensagem: "Usuário foi deletado" });
-
-  },
-};
+}

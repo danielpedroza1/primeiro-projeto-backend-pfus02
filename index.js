@@ -28,12 +28,12 @@ app.use(express.static('public'))
 
 //rota de página inicial
 app.get("/home", (req,res) => {
-    res.status(200).render("index",{titulo: "Página inicial"})
+    res.render("login", {titulo: "Login"});
 })
 
 //Rota inicial do projeto
 app.get("/", (req,res) => {
-    res.status(200).render("index", {titulo: "Página inical"})
+    res.render("login", {titulo: "Login"});
 })
 
 //rota para quando tentar acessar uma rota que não existe
@@ -44,6 +44,6 @@ app.use((req,res) => {
 
 //subir o servidor
 app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`)
+    console.log(`Servidor funcionando em http://localhost:${port}`)
     
 })
